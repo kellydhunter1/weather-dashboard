@@ -4,9 +4,42 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <title>Weather Dashboard🌤️</title>
 </head>
-<body>
+<body class="flex-column min-100-vh">
+    <header class="hero">
+        <h1>Weather Dashboard</h1>
+        <p>Check out the weather conditions in your area and other places around the US</p>
+    </header>
+    <main class="container flex-row justify-space-between">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h3 class="card-header">Search for a City</h3>
+                <form class="card-body" id="city-search">
+                    <label class="form-label" for="city">City</label>
+                    <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+                    <label class="form-label" for="state">State</label>
+                    <input name="state" id="state" type="text" autofocus="true" class="form-input" />
+                    <button type="submit" class="btn">Search</button>
+                </form>
+            </div>
+            <div class="card">
+                <h3 class="card-title">Previous Cities</h3>
+                <div class="card-body">
+                    <ul id="saved-cities"></ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-8">
+            <h2 id="city-date"><span id="icon"></span></h2>
+        </div>
+
+    </main>
+
     <script src="assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
