@@ -1,45 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>Weather Dashboard🌤️</title>
 </head>
+
 <body class="flex-column min-100-vh">
-    <header class="hero">
+    <header class="container hero">
         <h1>Weather Dashboard</h1>
         <p>Check out the weather conditions in your area and other places around the US</p>
     </header>
-    <main class="container flex-row justify-space-between">
-        <div class="col-12 col-md-4">
-            <div class="card">
-                <h3 class="card-header">Search for a City</h3>
-                <form class="card-body" id="city-search">
-                    <label class="form-label" for="city">City</label>
-                    <input name="city" id="city" type="text" autofocus="true" class="form-input" />
-                    <label class="form-label" for="state">State</label>
-                    <input name="state" id="state" type="text" autofocus="true" class="form-input" />
-                    <button type="submit" class="btn">Search</button>
-                </form>
-            </div>
-            <div class="card">
-                <h3 class="card-title">Previous Cities</h3>
-                <div class="card-body">
-                    <ul id="saved-cities"></ul>
+    <main class="flex-row justify-space-between">
+        <div class="container row justify-content-center">
+            <div class="col-12 col-md-4">
+                <div class="card">
+                    <h3 class="card-header">Search for a City</h3>
+                    <form class="card-body" id="city-search">
+                        <div class="row g-2">
+                            <div class="col-8">
+                                <div class="form-floating">
+                                    <input class="form-control" name="city" id="city" type="text" autofocus="true"
+                                        class="form-input" />
+                                    <label class="form-label" for="city">City</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input class="form-control" name="state" id="state" type="text" autofocus="true"
+                                        class="form-input" />
+                                    <label class="form-label" for="state">State</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 pt-2">
+                            <button class="btn btn-primary" type="button">Search</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <h3 class="card-header">Recent Cities</h3>
+                    <div class="card-body">
+                        <ul id="saved-cities"></ul>
+                    </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="col-12 col-md-8">
-            <h2 id="city-date"><span id="icon"></span></h2>
+<!-- Current City Weather Display -->
+            <div class="col-12 col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- City & Date -->
+                        <div class="row align-items-center">
+                            <h2 class="card-title col-auto" id="city-display"></h2>
+                            <p class="card-subtitle col-auto" id="date"></p>
+                        </div>
+                        <!-- Temp -->
+                        <div class="row align-items-center">
+                            <h1 class="col-auto" id="temp"></h1>
+                            <div class="col-auto"id="icon"></div>
+                        </div>
+                        <!-- Other Info -->
+                    <ul id="weather-data">
+                        <li id="wind"></li>
+                        <li id="humidity"></li>
+                        <li id="uv-index"></li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>
 
     <script src="assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
