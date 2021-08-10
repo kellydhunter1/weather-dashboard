@@ -8,6 +8,7 @@ const iconImg = document.createElement("img");
 const currentWindEl = document.querySelector("#wind");
 const currentHumidityEl = document.querySelector("#humidity");
 const currentUvIndexEl = document.querySelector("#uv-index");
+const uvValueSpan = document.querySelector("#uv-value");
 const recentCitiesEl = document.querySelector("#recent-cities");
 const cityInput = document.querySelector("#city");
 const stateInput = document.querySelector("#state");
@@ -22,15 +23,46 @@ const findWeatherInfo = function(apiUrl) {
         if (response.ok) {
             response.json().then(function(data) {
                 console.log("Here are the results for ", data.name, date.getMonth() + "/" + date.getDate() +"/" + date.getFullYear());
-                displayWeather(data);
                 saveCity(data);
                 recentCityList(data);
+            displayWeather(data);
             });
         } else {
             alert('Error: City Not Found');
         }
     })
     console.log(apiUrl);
+};
+
+const currentUvIndex = function(data) {
+    const cityLat = data.coord.lat;
+    const cityLon = data.coord.lon;
+    fetch("https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&appid=" + apiKey)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                    const uvIndex = data.current.uvi;
+                    if (uvIndex <= 2 ) {
+                        uvValueSpan.classList = "p-1 mb-2 bg-success text-white";
+                        console.log("GREEN- UV index is low!");
+                }   if (2 < uvIndex && uvIndex <= 5) {
+                        uvValueSpan.classList = "p-1 mb-2 bg-warning";
+                        console.log("YELLOW- UV is in moderate Range!");
+                }   if (5 < uvIndex && uvIndex <= 7) {
+                    uvValueSpan.classList = "p-1 mb-2 bg-orange";
+                    console.log("ORANGE- UV is High!");
+                } if(7 < uvIndex && uvIndex <= 10) {
+                    uvValueSpan.classList = "p-1 mb-2 bg-danger text-white";
+                    console.log("RED- UV is wayyyy too high!");
+                } if(uvIndex > 10) {
+                    uvValueSpan.classList = "p-1 mb-2 bg-purple text-white";
+                    console.log("PURPLE- Stay inside!")
+                }
+                    uvValueSpan.innerHTML = uvIndex;
+                    console.log(uvIndex);
+                })
+            }
+        });
 };
 
 const displayWeather = function(data) {
@@ -41,9 +73,8 @@ const displayWeather = function(data) {
     currentHumidityEl.textContent = "Humidity: " + data.main.humidity + "%";
     iconImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png");
     iconEl.appendChild(iconImg);
-    currentUvIndexEl.textContent="UV Index: ";
     console.log("City: " + data.name, "Temp: " + data.main.temp + "°F","Humidity: " + data.main.humidity + "%", "Wind: " + data.wind.speed + " MPH");
-    
+    currentUvIndex(data);
 };
 
 const recentCityList = function(data) {
@@ -99,7 +130,7 @@ const loadCities = function() {
 const citySearch = function() {
     city = cityInput.value;
     state = stateInput.value;
-    let apiUrl = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + ",us&units=imperial&APPID=" + apiKey;
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + ",us&units=imperial&APPID=" + apiKey;
     findWeatherInfo(apiUrl);
 };
 recentCitiesEl.addEventListener("click", cityRecallHandler);
