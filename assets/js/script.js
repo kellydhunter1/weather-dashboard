@@ -8,11 +8,12 @@ const iconImg = document.createElement("img");
 const currentWindEl = document.querySelector("#wind");
 const currentHumidityEl = document.querySelector("#humidity");
 const currentUvIndexEl = document.querySelector("#uv-index");
-const uvValueSpan = document.querySelector("#uv-value");
+// const uvValueSpan = document.querySelector("#uv-value");
 const recentCitiesEl = document.querySelector("#recent-cities");
 const cityInput = document.querySelector("#city");
 const stateInput = document.querySelector("#state");
 const citySearchBtn = document.querySelector("#city-search");
+const forecastEl = document.querySelector("#five-day-forecast");
 const date = new Date();
 let savedCitiesArr = [];
 let apiUrl = "";
@@ -41,24 +42,28 @@ const currentUvIndex = function(data) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
+                    const uvValueSpan = document.createElement("span");
                     const uvIndex = data.current.uvi;
                     if (uvIndex <= 2 ) {
                         uvValueSpan.classList = "p-1 mb-2 bg-success text-white";
                         console.log("GREEN- UV index is low!");
-                }   if (2 < uvIndex && uvIndex <= 5) {
+                  } if (2 < uvIndex && uvIndex <= 5) {
                         uvValueSpan.classList = "p-1 mb-2 bg-warning";
                         console.log("YELLOW- UV is in moderate Range!");
-                }   if (5 < uvIndex && uvIndex <= 7) {
-                    uvValueSpan.classList = "p-1 mb-2 bg-orange";
-                    console.log("ORANGE- UV is High!");
-                } if(7 < uvIndex && uvIndex <= 10) {
-                    uvValueSpan.classList = "p-1 mb-2 bg-danger text-white";
-                    console.log("RED- UV is wayyyy too high!");
-                } if(uvIndex > 10) {
-                    uvValueSpan.classList = "p-1 mb-2 bg-purple text-white";
-                    console.log("PURPLE- Stay inside!")
+                  } if (5 < uvIndex && uvIndex <= 7) {
+                      uvValueSpan.classList = "p-1 mb-2 bg-orange";
+                      console.log("ORANGE- UV is High!");
+                  } if(7 < uvIndex && uvIndex <= 10) {
+                      uvValueSpan.classList = "p-1 mb-2 bg-danger text-white";
+                      console.log("RED- UV is wayyyy too high!");
+                  } if(uvIndex > 10) {
+                      uvValueSpan.classList = "p-1 mb-2 bg-purple text-white";
+                      console.log("PURPLE- Stay inside!")
                 }
                     uvValueSpan.innerHTML = uvIndex;
+                    currentUvIndexEl.appendChild(uvValueSpan);
+                    forecastEl.textContent="";
+                    fiveDayForcast(data);
                     console.log(uvIndex);
                 })
             }
@@ -71,6 +76,7 @@ const displayWeather = function(data) {
     currentTempEl.textContent = data.main.temp + "°F";
     currentWindEl.textContent = "Wind: " + data.wind.speed + " MPH";
     currentHumidityEl.textContent = "Humidity: " + data.main.humidity + "%";
+    currentUvIndexEl.innerHTML = "UV Index: ";
     iconImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png");
     iconEl.appendChild(iconImg);
     console.log("City: " + data.name, "Temp: " + data.main.temp + "°F","Humidity: " + data.main.humidity + "%", "Wind: " + data.wind.speed + " MPH");
@@ -98,6 +104,7 @@ const cityRecall = function(cityId) {
     let apiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&units=imperial&appid=" + apiKey;
     fetch(apiUrl).then(function(response) {
         response.json().then(function(data){
+            forecastEl.textContent="";
             displayWeather(data);
         })
     })
@@ -127,12 +134,63 @@ const loadCities = function() {
         }
 };
 
+
 const citySearch = function() {
     city = cityInput.value;
     state = stateInput.value;
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state + ",us&units=imperial&APPID=" + apiKey;
     findWeatherInfo(apiUrl);
 };
+
+// 5-day forecast
+const fiveDayForcast = function(data) {
+    // loop through array to set i to number in array
+    
+    const forecastCard = data.daily.slice(1,6);
+    for (let i = 0; i < forecastCard.length; i++) {
+        const forecastDate = new Date();
+        forecastDate.setDate(forecastDate.getDate() + (i+1));
+        const cardEl = document.createElement("div");
+        const dayCard = document.createElement("div");
+        const dayCardDate = document.createElement("p");
+        const dayCardTemp = document.createElement("p");
+        const dayCardIcon = document.createElement("img");
+        const dayCardUl = document.createElement("ul");
+        const dayCardWind = document.createElement("li");
+        const dayCardHumidity = document.createElement("li");
+        cardEl.className = "col";
+        dayCard.classList = "card bg-primary";
+        dayCardTemp.classList = "card-title text-white"
+        dayCardUl.classList = "list-group";
+        dayCardWind.classList = "list-group-item";
+        dayCardHumidity.classList = "list-group-item";
+        
+        dayCardDate.textContent = forecastDate;
+        // forecastDate.getMonth() + "/" + forecastDate.getDate() +"/" + forecastDate.getFullYear());
+        dayCardTemp.textContent = forecastCard[i].temp.day + "°F";
+        dayCardIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + forecastCard[i].weather[0].icon + ".png");
+        dayCardWind.textContent= "Wind: " +  forecastCard[i].wind_speed + "MPH";
+        dayCardHumidity.textContent= "Humidity: " +  forecastCard[i].humidity + "%";
+        dayCard.appendChild(dayCardDate);
+        dayCard.appendChild(dayCardTemp);
+        dayCard.appendChild(dayCardIcon);
+        dayCard.appendChild(dayCardUl);
+        dayCardUl.appendChild(dayCardWind);
+        dayCardUl.appendChild(dayCardHumidity);
+        cardEl.appendChild(dayCard);
+        forecastEl.appendChild(cardEl);
+
+        console.log("Forecast day "+ i +"ready!" + forecastCard[i].dt);
+
+
+/*  THEN I am presented with a 5-day forecast that displays 
+the date, 
+ 
+
+*/
+    }
+}
+
 recentCitiesEl.addEventListener("click", cityRecallHandler);
 citySearchBtn.addEventListener("click", citySearch)
 

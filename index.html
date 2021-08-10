@@ -52,7 +52,7 @@
                 </div>
             </div>
 <!-- Current City Weather Display -->
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-md-8">
                 <div class="card">
                     <div class="card-body">
                         <!-- City & Date -->
@@ -66,13 +66,21 @@
                             <div class="col-auto"id="icon"></div>
                         </div>
                         <!-- Other Info -->
-                    <ul id="weather-data">
-                        <li id="wind"></li>
-                        <li id="humidity"></li>
-                        <li><p id="uv-index">UV Index: <span id="uv-value"></span></p></li>
+                    <ul class="list-unstyled list-group" id="weather-data">
+                        <li class="list-group-item" id="wind"></li>
+                        <li class="list-group-item" id="humidity"></li>
+                        <li class="list-group-item"><p id="uv-index"><span id="uv-value"></p></span></li>
                     </ul>
                     </div>
                 </div>
+                    <!-- 5 day forecast -->
+                <!-- <div class="col-12 col-md-7"> -->
+                <section class="section">
+                    <h3>5-Day Forecast</h3>
+                    <div class="row row-cols-md-5 row-cols-md-3 g-2"id="five-day-forecast">
+                    </div>                                                                      
+                </div>
+                </div>      
             </div>
         </div>
 
