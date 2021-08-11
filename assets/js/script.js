@@ -77,7 +77,7 @@ const displayWeather = function(data) {
     currentWindEl.textContent = "Wind: " + data.wind.speed + " MPH";
     currentHumidityEl.textContent = "Humidity: " + data.main.humidity + "%";
     currentUvIndexEl.innerHTML = "UV Index: ";
-    iconImg.setAttribute("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + ".png");
+    iconImg.setAttribute("src", "https://openweathermap.org/img/wn/" + data.weather[0].icon + ".png");
     iconEl.appendChild(iconImg);
     console.log("City: " + data.name, "Temp: " + data.main.temp + "°F","Humidity: " + data.main.humidity + "%", "Wind: " + data.wind.speed + " MPH");
     currentUvIndex(data);
