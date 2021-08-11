@@ -168,7 +168,7 @@ const fiveDayForcast = function(data) {
         dayCardDate.textContent = forecastDate;
         // forecastDate.getMonth() + "/" + forecastDate.getDate() +"/" + forecastDate.getFullYear());
         dayCardTemp.textContent = forecastCard[i].temp.day + "°F";
-        dayCardIcon.setAttribute("src", "http://openweathermap.org/img/wn/" + forecastCard[i].weather[0].icon + ".png");
+        dayCardIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + forecastCard[i].weather[0].icon + ".png");
         dayCardWind.textContent= "Wind: " +  forecastCard[i].wind_speed + "MPH";
         dayCardHumidity.textContent= "Humidity: " +  forecastCard[i].humidity + "%";
         dayCard.appendChild(dayCardDate);
