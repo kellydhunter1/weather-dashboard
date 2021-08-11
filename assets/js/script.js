@@ -101,7 +101,7 @@ const cityRecallHandler = function(event) {
 };
 
 const cityRecall = function(cityId) {
-    let apiUrl = "http://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&units=imperial&appid=" + apiKey;
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?id=" + cityId + "&units=imperial&appid=" + apiKey;
     fetch(apiUrl).then(function(response) {
         response.json().then(function(data){
             forecastEl.textContent="";
