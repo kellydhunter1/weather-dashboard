@@ -150,6 +150,9 @@ const fiveDayForcast = function(data) {
     for (let i = 0; i < forecastCard.length; i++) {
         const forecastDate = new Date();
         forecastDate.setDate(forecastDate.getDate() + (i+1));
+        const month = forecastDate.getMonth() + 1;
+        const day = forecastDate.getDate();
+        const year = forecastDate.getFullYear();
         const cardEl = document.createElement("div");
         const dayCard = document.createElement("div");
         const dayCardDate = document.createElement("p");
@@ -160,13 +163,13 @@ const fiveDayForcast = function(data) {
         const dayCardHumidity = document.createElement("li");
         cardEl.className = "col";
         dayCard.classList = "card bg-primary";
+        dayCardDate.className = "text-white";
         dayCardTemp.classList = "card-title text-white"
         dayCardUl.classList = "list-group";
         dayCardWind.classList = "list-group-item";
         dayCardHumidity.classList = "list-group-item";
         
-        dayCardDate.textContent = forecastDate;
-        // forecastDate.getMonth() + "/" + forecastDate.getDate() +"/" + forecastDate.getFullYear());
+        dayCardDate.textContent = forecastDate.getMonth() + "/" + forecastDate.getDate() +"/" + forecastDate.getFullYear();
         dayCardTemp.textContent = forecastCard[i].temp.day + "°F";
         dayCardIcon.setAttribute("src", "https://openweathermap.org/img/wn/" + forecastCard[i].weather[0].icon + ".png");
         dayCardWind.textContent= "Wind: " +  forecastCard[i].wind_speed + "MPH";
@@ -181,13 +184,6 @@ const fiveDayForcast = function(data) {
         forecastEl.appendChild(cardEl);
 
         console.log("Forecast day "+ i +"ready!" + forecastCard[i].dt);
-
-
-/*  THEN I am presented with a 5-day forecast that displays 
-the date, 
- 
-
-*/
     }
 }
 
